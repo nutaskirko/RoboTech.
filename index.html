@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoboTech | Революція Роботів</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --primary-light: #60a5fa;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --background: #ffffff;
+            --card-bg: #f8fafc;
+            --border: rgba(0, 0, 0, 0.1);
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+
+        body {
+            font-family: 'Exo 2', sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--background);
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            color: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh; /* Add this */
+            margin: 0; /* Add this */
+            padding: 0; /* Add this */
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0; /* Update this */
+            left: 0; /* Update this */
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%); /* Update this */
+            object-fit: cover;
+            z-index: -1;
+            animation: scaleIn 1.5s ease-out forwards;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8));
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: white;
+            padding: 0 1rem;
+            max-width: 800px;
+            animation: fadeIn 1s ease-out 0.5s both;
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            background: linear-gradient(120deg, #ffffff, #60a5fa, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            letter-spacing: 2px;
+        }
+
+        .hero-subtitle {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 300;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 1s forwards;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.4s ease;
+            border: none;
+            cursor: pointer;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 1.5s forwards;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease-out, height 0.6s ease-out;
+        }
+
+        .cta-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 8rem 5%;
+            max-width: 2550px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 6rem;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+            font-family: 'Exo 2', sans-serif;
+        }
+
+        /* Timeline Section */
+        .timeline-container {
+            display: grid;
+            gap: 3rem;
+            position: relative;
+        }
+
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            left: 60px;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: var(--primary-light);
+            opacity: 0.3;
+        }
+
+        .timeline-item {
+            cursor: pointer;
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+
+        .timeline-item.visible {
+            cursor: pointer;
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .timeline-item:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline-year {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            font-weight: 700;
+            min-width: 120px;
+            text-align: center;
+            position: relative;
+        }
+
+        .timeline-year::before {
+            content: '';
+            position: absolute;
+            left: -30px;
+            top: 50%;
+            width: 16px;
+            height: 16px;
+            background: var(--primary);
+            border-radius: 50%;
+            transform: translateY(-50%);
+            box-shadow: 0 0 0 6px rgba(59, 130, 246, 0.2);
+        }
+
+        .timeline-content {
+            flex-grow: 1;
+        }
+
+        .timeline-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+            font-weight: 600;
+            font-family: 'Exo 2', sans-serif;
+        }
+
+        /* Robots Grid */
+        .robots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            perspective: 1000px;
+        }
+
+        .robot-item {
+            cursor: pointer;
+            padding: 3rem 2rem;
+            background: var(--card-bg);
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transform-style: preserve-3d;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .robot-item.visible {
+            cursor: pointer;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .robot-item:hover {
+            transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .robot-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            animation: float 3s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        .robot-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+            font-weight: 600;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .robot-item p {
+            color: var(--text-light);
+            line-height: 1.7;
+            font-family: 'Exo 2', sans-serif;
+        }
+
+        /* Future Grid */
+        .future-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .future-item {
+            cursor: pointer;
+            padding: 3rem;
+            background: var(--card-bg);
+            border-radius: 20px;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: scale(0.95);
+        }
+
+        .future-item.visible {
+            cursor: pointer;
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .future-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .future-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .future-item:hover::before {
+            transform: scaleX(1);
+        }
+
+        .future-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+            font-weight: 600;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .future-item p {
+            color: var(--text-light);
+            line-height: 1.7;
+            font-family: 'Exo 2', sans-serif;
+        }
+
+        /* Chat Section */
+        .chat-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+        }
+
+        .chat-container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .chat-messages {
+            height: 400px;
+            padding: 2rem;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+
+        .message {
+            margin-bottom: 1.5rem;
+            padding: 1.2rem;
+            border-radius: 15px;
+            max-width: 80%;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeIn 0.3s ease-out forwards;
+            font-family: 'Exo 2', sans-serif;
+        }
+
+        .message.user {
+            background: var(--primary);
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+        }
+
+        .message.bot {
+            background: white;
+            border: 1px solid var(--border);
+            border-bottom-left-radius: 5px;
+        }
+
+        .chat-form {
+            display: flex;
+            padding: 1.5rem;
+            gap: 1rem;
+            background: white;
+            border-top: 1px solid var(--border);
+        }
+
+        #user-input {
+            flex-grow: 1;
+            padding: 1rem 1.5rem;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        #user-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--card-bg);
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            font-family: 'Exo 2', sans-serif;
+        }
+
+        .footer-links {
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links a {
+            color: var(--text);
+            text-decoration: none;
+            margin: 0 1.5rem;
+            transition: var(--transition);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Loading Animation */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: white;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .loading.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Scroll Progress */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: rgba(59, 130, 246, 0.1);
+            z-index: 1001;
+        }
+
+        .scroll-progress-bar {
+            height: 100%;
+            background: var(--primary);
+            width: 0%;
+            transition: width 0.1s ease-out;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .timeline-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .timeline-year {
+                margin-bottom: 1rem;
+            }
+
+            .timeline-year::before {
+                left: 50%;
+                top: -30px;
+                transform: translateX(-50%);
+            }
+
+            .timeline-container::before {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Scroll Progress -->
+    <div class="scroll-progress">
+        <div class="scroll-progress-bar"></div>
+    </div>
+
+    <header>
+        <nav>
+            <a href="#" class="logo">RoboTech</a>
+            <div class="nav-links">
+                <a href="#home">Головна</a>
+                <a href="#timeline">Хронологія</a>
+                <a href="#robots">Роботи</a>
+                <a href="#future">Майбутнє</a>
+                <a href="#chat">AI Чат</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <video class="hero-video" autoplay loop muted playsinline>
+                <source src="https://videos.pexels.com/video-files/6153047/6153047-uhd_2732_1440_25fps.mp4" type="video/mp4">
+            </video>
+            <div class="hero-content">
+                <h1>Революція Роботів</h1>
+                <p class="hero-subtitle">Технології майбутнього вже сьогодні</p>
+                <a href="#timeline" class="cta-button">Досліджувати</a>
+            </div>
+        </section>
+
+        <section id="timeline">
+            <div class="section-header">
+                <h2 class="section-title">Еволюція роботів</h2>
+                <p class="section-subtitle">Від перших механізмів до штучного інтелекту</p>
+            </div>
+            <div class="timeline-container"></div>
+        </section>
+
+        <section id="robots">
+            <div class="section-header">
+                <h2 class="section-title">Роботи серед нас</h2>
+                <p class="section-subtitle">Як технології змінюють наше життя</p>
+            </div>
+            <div class="robots-grid"></div>
+        </section>
+
+        <section id="future">
+            <div class="section-header">
+                <h2 class="section-title">Майбутнє роботів</h2>
+                <p class="section-subtitle">Що нас чекає завтра</p>
+            </div>
+            <div class="future-grid"></div>
+        </section>
+
+        <section id="chat">
+            <div class="section-header">
+                <h2 class="section-title">AI Асистент</h2>
+                <p class="section-subtitle">Спілкуйтеся з майбутнім</p>
+            </div>
+            <div class="chat-container">
+                <div class="chat-messages"></div>
+                <form id="chat-form" class="chat-form">
+                    <input type="text" id="user-input" placeholder="Напишіть повідомлення..." required>
+                    <button type="submit" class="cta-button">Надіслати</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#privacy">Приватність</a>
+            <a href="#terms">Умови</a>
+        </div>
+        <p>&copy; 2025 RoboTech. Усі права захищені.</p>
+    </footer>
+
+    <script>
+        // Loading Screen
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.querySelector('.loading').classList.add('hidden');
+            }, 1000);
+        });
+
+        // Scroll Progress
+        window.addEventListener('scroll', () => {
+            const scrollProgress = document.querySelector('.scroll-progress-bar');
+            const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            scrollProgress.style.width = `${scrolled}%`;
+
+            // Header Background
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Intersection Observer for Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe sections and items
+        document.querySelectorAll('section, .timeline-item, .robot-item, .future-item, .chat-container').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Timeline Data
+        const timelineData = [
+            { year: "1950", event: "Перший промисловий робот" },
+            { year: "1970", event: "Розвиток робототехніки в автомобільній промисловості" },
+            { year: "1990", event: "Поява перших роботів-помічників" },
+            { year: "2010", event: "Розвиток штучного інтелекту в робототехніці" },
+            { year: "2020", event: "Масове впровадження роботів у повсякденне життя" }
+        ];
+
+        // Populate Timeline with Animation Delay
+        const timelineContainer = document.querySelector(".timeline-container");
+        timelineData.forEach((item, index) => {
+            const timelineItem = document.createElement("div");
+            timelineItem.classList.add("timeline-item");
+            timelineItem.style.transitionDelay = `${index * 0.2}s`;
+            timelineItem.innerHTML = `
+                <div class="timeline-year">${item.year}</div>
+                <div class="timeline-content">
+                    <h3>${item.event}</h3>
+                </div>
+            `;
+            timelineContainer.appendChild(timelineItem);
+            observer.observe(timelineItem);
+        });
+
+        // Robots Data with Animation Delay
+        const robotsData = [
+            { name: "Промисловий робот", icon: "🏭", description: "Автоматизує виробничі процеси на заводах" },
+            { name: "Медичний робот", icon: "🏥", description: "Допомагає в проведенні складних операцій" },
+            { name: "Робот-пилосос", icon: "🧹", description: "Автономно прибирає оселю" },
+        ];
+
+        const robotsGrid = document.querySelector(".robots-grid");
+        robotsData.forEach((robot, index) => {
+            const robotItem = document.createElement("div");
+            robotItem.classList.add("robot-item");
+            robotItem.style.transitionDelay = `${index * 0.2}s`;
+            robotItem.innerHTML = `
+                <div class="robot-icon">${robot.icon}</div>
+                <h3>${robot.name}</h3>
+                <p>${robot.description}</p>
+            `;
+            robotsGrid.appendChild(robotItem);
+            observer.observe(robotItem);
+        });
+
+        // Future Data with Animation Delay
+        const futureData = [
+            { title: "Нанороботи в медицині", description: "Мікроскопічні роботи для лікування на клітинному рівні" },
+            { title: "Роботи-компаньйони", description: "Емоційно інтелектуальні роботи для спілкування та підтримки" },
+            { title: "Екологічні роботи", description: "Роботи для очищення навколишнього середовища та боротьби зі зміною клімату" }
+        ];
+
+        const futureGrid = document.querySelector(".future-grid");
+        futureData.forEach((item, index) => {
+            const futureItem = document.createElement("div");
+            futureItem.classList.add("future-item");
+            futureItem.style.transitionDelay = `${index * 0.2}s`;
+            futureItem.innerHTML = `
+                <h3>${item.title}</h3>
+                <p>${item.description}</p>
+            `;
+            futureGrid.appendChild(futureItem);
+            observer.observe(futureItem);
+        });
+
+        // Enhanced Chat Functionality
+        const chatForm = document.getElementById("chat-form");
+        const chatMessages = document.querySelector(".chat-messages");
+        const userInput = document.getElementById("user-input");
+
+        async function getChatbotResponse(message) {
+            // Simulate AI response delay
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            return "Дякую за ваше повідомлення! Це демо-версія чат-бота.";
+        }
+
+        chatForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const userMessage = userInput.value.trim();
+            if (userMessage) {
+                addMessage("Ви", userMessage, "user");
+                userInput.value = "";
+                
+                try {
+                    const botResponse = await getChatbotResponse(userMessage);
+                    addMessage("Робот", botResponse, "bot");
+                } catch (error) {
+                    console.error('Error:', error);
+                    addMessage("Робот", "Вибачте, сталася помилка. Спробуйте ще раз пізніше.", "bot");
+                }
+            }
+        });
+
+        function addMessage(sender, message, type) {
+            const messageElement = document.createElement("div");
+            messageElement.classList.add("message", type);
+            messageElement.innerHTML = `<strong>${sender}:</strong> ${message}`;
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Smooth Scroll with Offset
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                const headerOffset = 80;
+                const elementPosition = target.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Parallax Effect for Hero
+        window.addEventListener('scroll', () => {
+            const hero = document.querySelector('.hero-video');
+            const scrolled = window.pageYOffset;
+            hero.style.transform = `translate3d(0, ${scrolled * 0.5}px, 0)`;
+        });
+
+        function adjustVideoSize() {
+            const video = document.querySelector('.hero-video');
+            const windowRatio = window.innerWidth / window.innerHeight;
+            const videoRatio = video.videoWidth / video.videoHeight;
+            
+            if (windowRatio > videoRatio) {
+                video.style.width = '100vw';
+                video.style.height = 'auto';
+            } else {
+                video.style.width = 'auto';
+                video.style.height = '100vh';
+            }
+        }
+
+        window.addEventListener('load', adjustVideoSize);
+        window.addEventListener('resize', adjustVideoSize);
+
+        document.getElementById('').addEventListener('click', function() {
+            window.location.href = '../page/Sally the Witch.html';
+        });
+    </script>
+</body>
+</html>
